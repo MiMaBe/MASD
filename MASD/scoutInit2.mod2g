@@ -1,0 +1,6 @@
+use scoutKB as knowledge
+
+module scoutInit2 {
+	if true then insert(followingPath(1)).
+	if true then insert(currentLocation(9)).  	
+}

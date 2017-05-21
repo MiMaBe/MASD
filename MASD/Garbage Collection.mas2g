@@ -1,0 +1,25 @@
+define ScoutAgent1 as agent {
+	use scoutInit1 as init module.
+	use scoutMain as main module.
+	use scoutEvents as event module.
+	
+}
+
+define ScoutAgent2 as agent {
+	use scoutInit2 as init module.
+	use scoutMain as main module.
+	use scoutEvents as event module.
+	
+}
+
+define HarvesterAgent as agent{
+	use harvester as main module.
+}
+
+define SystemAgent as agent{
+	use system as main module.
+}
+
+launchpolicy{
+	
+}

@@ -1,0 +1,6 @@
+use scoutKnowledge as knowledge.
+exit=always.
+
+module scout {
+	if true then print("Hello, world!").
+}
