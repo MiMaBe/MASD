@@ -1,4 +1,4 @@
-use harvesterKnowledge as knowledge.
+use harvesterKB as knowledge.
 exit=always.
 
 module harvester {

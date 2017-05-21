@@ -1,4 +1,4 @@
-use scoutKB as knowledge
+use scoutsKB as knowledge.
 
 module scoutInit1 {
 	if true then insert(followingPath(1)).
