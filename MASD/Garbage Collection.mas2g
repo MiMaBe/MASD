@@ -23,5 +23,5 @@ define SystemAgent as agent{
 launchpolicy{
 	launch ScoutAgent1.
 	launch ScoutAgent2.
-	%launch HarvesterAgent.
+	launch HarvesterAgent.
 }

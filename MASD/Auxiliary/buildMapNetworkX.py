@@ -65,7 +65,7 @@ scout1_map3 = ['9','17','25','33','41','49','57','65','73','81','89','97','98','
 scout2_map3 = ['11','12','13','14','22','30','38','46','54','62','70','78','86','94','102','101','93','85','77','69',
                '61','53','45','37','29','21','20','19']
 
-cityMap4 = "{10, 10,  R, 10, 10, 10, 10, 10, 10, 10, 10, 10}," \
+cityMap4 =     "{10, 10,  R, 10, 10, 10, 10, 10, 10, 10, 10, 10}," \
                "{10,  S,  S,  S,  SC, S,  S,  S,  S,  S,  S, 10}," \
                "{10,  S,  S,  S,  S,  S,  S,  S,  S,  S,  S, 10}," \
                "{10,  S,  S, 10, 10,  S,  S, 10, 10,  S,  S, 10}," \
@@ -105,6 +105,7 @@ nRows = np.shape(matrix)[0]
 nCols = np.shape(matrix)[1]
 writeMap(cityMap, nRows, nCols)
 graph_facts = []
+system_facts = []
 
 G = nx.Graph()
 G.add_nodes_from(range(nRows*nCols))
@@ -112,6 +113,7 @@ G.add_nodes_from(range(nRows*nCols))
 for i in range(nRows - 1):
     for j in range(nCols - 1):
         if matrix[i, j] == 0:
+            system_facts.append('roadCell(' + str(nCols*i + j) + ').')
             if matrix[i, j + 1] == 0:
                 G.add_edge(nCols * i + j, nCols * i + j + 1)
                 graph_facts.append('edge(' + str(nCols * i + j) + ',' + str(nCols * i + j + 1) + ').')
@@ -162,20 +164,29 @@ for node in G.nodes():
 
     visited_nodes.append(node)
 
+# Create system agent knowledge base
+fileSystem = open('../systemKB.pl', 'w')
+fileSysAux = open('systemAuxiliar.pl', 'r')
+fileSystem.write('\nnCols(' + str(nCols) + ').' + '\ncolsXrows(' + str(nCols*nRows) +').\n')
+fileSystem.write("".join(list(map(lambda x: x + '\n', sorted(system_facts)))))
+fileSystem.write(fileSysAux.read())
+fileSysAux.close()
+
 # Create harvesters knowledge bases
-fileOut = open('harvesterKB.pl', 'w')
+fileOut = open('../harvesterKB.pl', 'w')
+fileHAux = open('harvesterAuxiliar.pl', 'r')
 fileOut.write("".join(list(map(lambda x: x + '\n', sorted(graph_facts)))))
 fileOut.write("".join(list(map(lambda x: x + '\n', sorted(facts)))))
 fileOut.write("".join(list(map(lambda x: x + '\n', facts_SP))))
-fileSP = open('auxiliarFiles/finalCode.pl', 'r')
+fileSP = open('finalCode.pl', 'r')
 code = fileSP.read()
 fileOut.write('\n\n' + code)
 fileSP.close()
 fileOut.close()
 
 # Create scouts knowledge bases
-fileScout = open('scoutsKB.pl', 'w')
-fileSAux = open('auxiliarFiles/scoutAuxiliar.pl', 'r')
+fileScout = open('../scoutsKB.pl', 'w')
+fileSAux = open('scoutAuxiliar.pl', 'r')
 fileScout.write(fileSAux.read())
 fileSAux.close()
 fileScout.write("".join(list(map(lambda x: x + '\n', sorted(graph_facts)))))
@@ -191,6 +202,5 @@ for i in range(len(scout2_map3) - 1):
         pathText = pathText + 'path(' + scout2_map3[i] + ',' + scout2_map3[0] + ',2).\n'
     else:
         pathText = pathText + 'path(' + scout2_map3[i] + ',' + scout2_map3[i+1] + ',2).\n'
-
 fileScout.write(pathText)
 fileScout.close()

@@ -1,4 +1,4 @@
-use systemrKnowledge as knowledge.
+use harvesterKB as knowledge.
 exit=always.
 
 module system {
