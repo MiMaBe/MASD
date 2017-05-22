@@ -17,6 +17,7 @@ define HarvesterAgent as agent{
 }
 
 define SystemAgent as agent{
+	use systemInit as init module.
 	use system as main module.
 }
 
