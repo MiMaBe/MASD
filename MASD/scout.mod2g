@@ -1,6 +1,16 @@
 use scoutsKB as knowledge.
-exit=always.
+use movingAgent as actionspec.
 
-module scout {
-	if true then print("Hello, world!").
+module scout {	
+	if  goal(checkedSurroundings(Loc)), bel(currentLocation(Loc))
+		then (systemAgent).send?(currentLocation(Loc)) + drop(checkedSurroundings(Loc)).
+	
+	if goal(notifyNewGarbage(Loc)), bel(scoutId(Id))
+		then allother.send(newGarbage(Loc)) + drop(notifyNewGarbage(Loc)) + adopt(ready(Id)).
+	
+	if goal(ready(Id))
+		then (systemAgent).send(ready(Id)) + drop(ready(Id)).
+	
+	if bel(allowedToMove(X,Y)) 
+		then move(X,Y) + adopt(checkedSurroundings(Y)).
 }

@@ -85,7 +85,7 @@ transformation = {'S': 0, '10': 1, 'R': 2, 'SC': 0}
 
 
 ###############  select map #################################################################
-cityMap = cityMap4
+cityMap = cityMap3
 #############################################################################################
 text = cityMap.replace(' ', '').split('},{')
 text[0] = text[0].replace('{', '')
@@ -167,7 +167,6 @@ for node in G.nodes():
 # Create system agent knowledge base
 fileSystem = open('../systemKB.pl', 'w')
 fileSysAux = open('systemAuxiliar.pl', 'r')
-fileSystem.write(':- dynamic newGarbage/1.\n')
 fileSystem.write('\nnCols(' + str(nCols) + ').' + '\ncolsXrows(' + str(nCols*nRows) +').\n')
 fileSystem.write("".join(list(map(lambda x: x + '\n', sorted(system_facts)))))
 fileSystem.write(fileSysAux.read())

@@ -1,6 +1,7 @@
-use harvesterKB as knowledge.
-exit=always.
+use systemKB as knowledge.
 
 module system {
-	if true then print("Hello, world!").
+	%if bel(getRandom(R), R > 0.1), bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
+	if bel(not(noReady(X))) 
+		then allother.send(newIteration('go')).
 }

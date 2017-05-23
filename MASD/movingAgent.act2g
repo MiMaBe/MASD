@@ -1,0 +1,5 @@
+use scoutsKB as knowledge.
+
+define move(X,Y) as internal with
+	pre{ allowedToMove(X,Y) }
+	post{ currentLocation(Y), not(allowedToMove(X,Y)), not(currentLocation(X)) }

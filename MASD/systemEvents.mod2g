@@ -1,0 +1,15 @@
+use systemKB as knowledge.
+
+module systemEvents {
+	forall (Scout).sent(scoutId(X)) 
+		do insert(scoutId(X)) + insert(noReady(X)).
+		
+	forall (Scout).sent?(currentLocation(X)), bel(not(foundGarbage(X)))
+		do (Scout).send(noGarbage(X)).
+		
+	forall (Scout).sent?(currentLocation(X)), bel(foundGarbage(X)), bel(garbageAtReachFrom(X,Loc))
+		do (Scout).send(newGarbage(Loc)) + delete(newGarbage(Loc)).
+	
+	forall (Scout).sent(ready(X))
+		do delete(noReady(X)).
+}

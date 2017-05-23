@@ -5,4 +5,10 @@ module systemInit {
 	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
 	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
 	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
+	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
+	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
+	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
+	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
+	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
+	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
 }

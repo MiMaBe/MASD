@@ -1,0 +1,1 @@
+I can not send a message to particular agent because it must appear in the condition of the rule, and since a rule is a query the destination must be specified there. 

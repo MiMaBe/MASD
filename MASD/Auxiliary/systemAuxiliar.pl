@@ -1,3 +1,8 @@
+:- dynamic newGarbage/1,
+	scoutId/1,
+	noReady/1,
+	scoutLocation/1.
+
 
 generateNewGarbageLoc(Loc) :- 
 	colsXrows(Max),
@@ -26,4 +31,3 @@ surr(X,Y) :- colsXrows(M), Y is X + 1, Y < M.
 surr(X,Y) :- nCols(C), colsXrows(M), Y is X + C - 1, Y < M.
 surr(X,Y) :- nCols(C), colsXrows(M), Y is X + C, Y < M.
 surr(X,Y) :- nCols(C), colsXrows(M), Y is X + C + 1, Y < M.
-
