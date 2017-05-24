@@ -1,7 +1,17 @@
 use systemKB as knowledge.
 
+order = linearall.
+
 module system {
-	%if bel(getRandom(R), R > 0.1), bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
-	if bel(not(noReady(X))) 
-		then allother.send(newIteration('go')).
+	% Generate new garbage given probability in integers from 0 to 100.
+	if bel(random(0,100,R), R < 10), bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
+	
+	if true then insert(allAgentsReady('.')).
+	
+	forall bel(agentId(X)) do{
+		if bel(not(ready(X))) then delete(allAgentsReady('.')).
+	}
+
+	if bel(allAgentsReady('.'))
+		then allother.send(newIteration('go')) + drop(allAgentsReady('.')).
 }

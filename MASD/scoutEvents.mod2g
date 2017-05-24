@@ -1,13 +1,15 @@
 use scoutsKB as knowledge.
 
 module scoutEvents {
+	if (systemAgent).sent(agentId(Id))
+		then insert(agentId(Id)).
+	
 	if (systemAgent).sent(newGarbage(Loc))
 		then adopt(notifyNewGarbage(Loc)).
 	
-	if (systemAgent).sent(noGarbage(Loc)), bel(scoutId(Id))
-		then adopt(ready(Id)).
+	if (systemAgent).sent(noGarbage(Loc)), bel(agentId(Id), Id\='unknown')
+		then insert(ready(Id)).
 		
-	if (systemAgent).sent(newIteration('go')), bel(currentLocation(Loc)), bel(followingPath(P)), 
-	bel(path(Loc,Next,P)) 
+	if (systemAgent).sent(newIteration('go')), bel(currentLocation(Loc)), bel(followingPath(P)),  bel(path(Loc,Next,P)) 
 		then insert(allowedToMove(Loc,Next)).
 }

@@ -7,8 +7,8 @@ define scoutAgent1 as agent {
 
 define scoutAgent2 as agent {
 	use scoutInit2 as init module.
-	%use scoutMain as main module.
-	%use scoutEvents as event module.
+	use scout as main module.
+	use scoutEvents as event module.
 	
 }
 
@@ -24,7 +24,7 @@ define systemAgent as agent{
 
 launchpolicy{
 	launch scoutAgent1.
-	%launch ScoutAgent2.
+	launch scoutAgent2.
 	%launch HarvesterAgent.
 	launch systemAgent. 
 }

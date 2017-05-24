@@ -1,15 +1,20 @@
 use systemKB as knowledge.
 
 module systemEvents {
-	forall (Scout).sent(scoutId(X)) 
-		do insert(scoutId(X)) + insert(noReady(X)).
-		
+	% Answer identification requests and store the agents Ids.
+	forall(Agent).sent?(agentId(Id))
+		do (Agent).send(agentId(Agent)) + insert(agentId(Agent)).
+	
+	% Answer scout surroundings request, no garbage found.
 	forall (Scout).sent?(currentLocation(X)), bel(not(foundGarbage(X)))
 		do (Scout).send(noGarbage(X)).
-		
+	
+	% Answer scout surroundings request, new garbage found.	
 	forall (Scout).sent?(currentLocation(X)), bel(foundGarbage(X)), bel(garbageAtReachFrom(X,Loc))
 		do (Scout).send(newGarbage(Loc)) + delete(newGarbage(Loc)).
 	
+	% If scout is ready delete belief about it not being ready.
 	forall (Scout).sent(ready(X))
-		do delete(noReady(X)).
-}
+		%do delete(noReady(X)) + adopt(allAgentsReady('_')).
+		do insert(ready(X)). 
+}	

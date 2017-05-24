@@ -2,5 +2,7 @@ use scoutsKB as knowledge.
 
 module scoutInit2 {
 	if true then insert(followingPath(2)).
-	if true then insert(currentLocation(11)).  	
+	if true then insert(currentLocation(11)).
+	if true then allother.send?(agentId('unknown')).
+	if true then adopt(checkedSurroundings(11)).  	
 }

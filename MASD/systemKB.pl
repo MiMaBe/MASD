@@ -58,10 +58,10 @@ roadCell(97).
 roadCell(98).
 roadCell(99).
 :- dynamic newGarbage/1,
-	scoutId/1,
-	noReady/1,
+	agentId/1,
+	ready/1,
+	allAgentsReady/1,
 	scoutLocation/1.
-
 
 generateNewGarbageLoc(Loc) :- 
 	colsXrows(Max),

@@ -3,6 +3,5 @@ use scoutsKB as knowledge.
 module scoutInit1 {
 	if true then insert(followingPath(1)).
 	if true then insert(currentLocation(9)).
-	if true then insert(scoutId('scout1')) + allother.send(scoutId('scout1')).
 	if true then adopt(checkedSurroundings(9)).
 }
