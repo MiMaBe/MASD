@@ -1,4 +1,3 @@
-
 nCols(8).
 colsXrows(112).
 roadCell(10).

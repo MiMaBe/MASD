@@ -6,7 +6,7 @@ module system {
 	% Generate new garbage given probability in integers from 0 to 100.
 	if bel(random(0,100,R), R < 10), bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).
 	
-	if true then insert(allAgentsReady('.')).
+	if bel(agentId(X)) then insert(allAgentsReady('.')).
 	
 	forall bel(agentId(X)) do{
 		if bel(not(ready(X))) then delete(allAgentsReady('.')).
