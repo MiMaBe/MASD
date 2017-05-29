@@ -1,0 +1,25 @@
+use harvesterKB as knowledge.
+
+module harvesterEvents {
+	% Store self identifier received from the system agent and communicate to other harvesters. 
+	if (systemAgent).sent(selfId(Id))
+		then insert(selfId(Id)) + allother.send(harvesterId(Id)).
+	
+	% Store other harvesters identifiers.
+	forall (Anyone).sent(harvesterId(Id)), bel(not(harvesterId(Id)))
+		do insert(harvesterId(Id)).
+	
+	% When any scout has discovered new garbage and I am not currently collecting garbage 
+	% adopt goal to send distance.
+	forall (Anyone).sent(newGarbage(Loc)), goal(not(collectedGarbage(_))) 
+		do insert(newGarbage(Loc)) + adopt(sentDistance(Loc)).
+	
+	% Store all received messages from other harvesters with their distances to unassigned garbages
+	% so I can know who is missing.  
+	forall (Anyone).sent(myDistanceToGarbage(Harvester, Loc, Dist)), goal(not(collectedGarbage(_))) 
+		do insert(harvesterDistanceToGarbage(Harvester, Loc, Dist)).
+	
+	% Store in beliefs base the agents that are collecting garbage. Agents that are collecting garbage do not
+	% participate in new garbage assignation. Remove garbage that is going to be collected. 
+	forall (Harvester).sent(collectingGarbage(Loc)) do insert(collectingGarbage(Harvester)) + delete(newGarbage(Loc)).
+}

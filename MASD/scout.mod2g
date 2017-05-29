@@ -3,14 +3,14 @@ use movingAgent as actionspec.
 
 module scout {	
 	% If agent does not know its identifier ask to any other agent.
-	if bel(not(agentId(X))) then allother.send?(agentId('unknown')).
+	if bel(not(selfId(X))) then allother.send?(selfId('unknown')).
 	
 	% If the scout does not know its identifier then the system agent is not awake. 
-	if goal(checkedSurroundings(Loc)), bel(currentLocation(Loc)), bel(agentId(Id), Id\='unknown')
+	if goal(checkedSurroundings(Loc)), bel(currentLocation(Loc)), bel(selfId(Id), Id\='unknown')
 		then (systemAgent).send?(currentLocation(Loc)) + drop(checkedSurroundings(Loc)).
 	
-	if goal(notifyNewGarbage(Loc)), bel(agentId(Id))
-		then allother.send(newGarbage(Loc)) + drop(notifyNewGarbage(Loc)) + insert(ready(Id)) + print('\nNEW GARBAGE\n').
+	if goal(notifyNewGarbage(Loc)), bel(selfId(Id))
+		then allother.send(newGarbage(Loc)) + drop(notifyNewGarbage(Loc)) + insert(ready(Id)) + print('# NEW GARBAGE').
 	
 	if bel(ready(Id))
 		then (systemAgent).send(ready(Id)) + delete(ready(Id)).

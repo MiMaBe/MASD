@@ -63,9 +63,10 @@ roadCell(99).
 	scoutLocation/1.
 
 generateNewGarbageLoc(Loc) :- 
-	colsXrows(Max),
-	random(0, Max, Loc),
-	\+ roadCell(Loc).
+	setof(X, roadCell(X), L), 
+	length(L,Max), 
+	random(0,Max,R), 
+	nth0(R,L,Loc). 
 
 garbageAtReachFrom(X,Y) :- 
 	newGarbage(Y),

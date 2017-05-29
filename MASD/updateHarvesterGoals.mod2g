@@ -1,0 +1,10 @@
+use harvesterKB as knowledge.
+
+order = linearall.
+
+module updateHarvesterGoals {
+	forall goal(sentDistance(Loc)), bel(not(newGarbage(Loc))) do drop(sentDistance(Loc)).	
+	forall goal(allMessagesReceived(Loc)), bel(not(newGarbage(Loc))) do drop(allMessagesReceived(Loc)).
+	forall goal(assignedGarbage(Loc)), bel(not(newGarbage(Loc))) do drop(assignedGarbage(Loc)).
+	forall goal(agreementAchieved(Loc)), bel(not(newGarbage(Loc))) do drop(agreementAchieved(Loc)).
+}

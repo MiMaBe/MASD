@@ -1,0 +1,8 @@
+use harvesterKB as knowledge.
+
+module harvesterInit {
+	% Insert agent in random location
+	if bel(randomRoadLocation(Loc)) then insert(currentLocation(Loc)).
+	%  Ask system agent for self identifier.
+	if true then allother.send?(selfId('unknown')).
+}

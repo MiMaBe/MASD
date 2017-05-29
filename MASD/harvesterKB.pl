@@ -1,3 +1,21 @@
+:- dynamic currentLocation/1,
+	ready/1,
+	agentId/1,
+	harvesterId/1,
+	selfId/1,
+	assignedGarbage/1,
+	sentDistance/1,
+	tiedWith/1,
+	collectedGarbage/1,
+	myDistanceToGarbage/3,
+	agreementAchieved/1,
+	collectingGarbage/1,
+	harvesterDistanceToGarbage/3,
+	allMessagesReceived/1,
+	harvestersReady/1,
+	closestHarvester/3,
+	newGarbage/1.
+%Automatic facts.
 edge(10,11).
 edge(10,18).
 edge(10,9).
@@ -1822,7 +1840,13 @@ shortest(101,101,[101],0).
 shortest(101,102,[101,102],1).
 shortest(102,102,[102],0).
 
+roadCell(X) :- edge(X,_); edge(_,X).
 
+randomRoadLocation(Loc) :- 
+	setof(X, roadCell(X), L), 
+	length(L,Max), 
+	random(0,Max,R), 
+	nth0(R,L,Loc). 
 
 shortestPath(X,Y,P,L) :- shortest(X,Y,P,L).
 

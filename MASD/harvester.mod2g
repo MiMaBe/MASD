@@ -1,6 +1,84 @@
 use harvesterKB as knowledge.
-exit=always.
+
+order = linearall.
 
 module harvester {
-	if true then print("Hello, world!").
+	% If agent does not know its identifier ask to any other agent.
+	if bel(not(selfId(X))) then allother.send?(selfId('unknown')).
+	
+	% Update goals 
+	if true then updateHarvesterGoals.
+	
+	% When new garbage has to be assigned send my distance to the garbage location to all other harvesters.
+	% Send only once (sentDistance/3)
+	forall goal(sentDistance(Loc)), bel(currentLocation(CurrLoc)), bel(shortestPath(CurrLoc, Loc, P, Len)) do{
+		
+		% Store in beliefs base my distance to garbage. 
+		if bel(selfId(Sid)) then insert(myDistanceToGarbage(Sid,Loc,Len)).
+		
+		% Send my distance to garbage to all harvesters I know. 
+		forall bel(harvesterId(Hid)), bel(myDistanceToGarbage(Sid,Loc,Len))
+			do (Hid).send(myDistanceToGarbage(Sid,Loc,Len)) + print(Sid) + print("# Distance sent") + print(Len).
+		
+		% Adopt new goal: I want to receive all messages from the harvesters I know. 
+		if true then drop(sentDistance(Loc)) + adopt(allMessagesReceived(Loc)).	
+	}
+	
+	% For each unassigned garbage in process of receiving message from other harvesters
+	forall goal(allMessagesReceived(Loc)) do{
+		
+		% Initially consider I have received all messages.
+		if true then insert(allMessagesReceived(Loc)).
+		
+		% For each harvester I know is not collecting garbage I check if I have his message. 
+		% If not, I don't believe I have received all messages.
+		forall bel(harvesterId(Id)), bel(not(collectingGarbage(Loc))), bel(not(harvesterDistanceToGarbage(Id, Loc, _)))
+			do delete(allMessagesReceived(Loc)).
+		
+		% If at the end I have received all messages, drop the current goal and adopt next goal (assign the garbage). 
+		if bel(allMessagesReceived(Loc)) then drop(allMessagesReceived(Loc)) + adopt(assignedGarbage(Loc)).
+	}
+	
+	forall goal(assignedGarbage(Loc)) do {
+		% ##########################################################################################
+		% ############################# hi ha un bon marron aqui ###################################
+		% ##########################################################################################
+		% 		...Mirar les notes
+		% Initialize closestHarvester
+		if bel(myDistanceToGarbage(Self,Loc,Dist)) then insert(closestHarvester(Self,Loc,Dist)).
+		% I check all the harvester distances to garbage and update closest harvester only when closer than I.
+		forall bel(harvesterDistanceToGarbage(Hid, Loc, Dist)), bel(not(ready(_))) do {
+			if bel(closestHarvester(IdBest, Loc, DistBest), Dist < DistBest)
+				% If somebody is closer than me, I can forget about that garbage and I am ready for next tick.
+				then delete(closestHarvester(IdBest, Loc, DistBest)) + insert(closestHarvester(Hid, Loc, Dist)) + 
+				insert(ready(IdBest)) + drop(assignedGarbage(Loc)).
+		}
+		
+		% If nobody is closer than me I must identify possible ties with other harvesters. 
+		if bel(not(ready(Self))) then {
+			forall bel(harvesterDistanceToGarbage(Hid, Loc, Dist)) do 
+				insert(tiedWith(Hid)).	
+		}
+			
+		% If I am not tied with anybody I can go for that garbage. 
+		if bel(not(ready(Self))), bel(not(tiedWith(_))) then {
+			if true then adopt(collectedGarbage(Loc)) + drop(assignedGarbage(Loc)).
+			forall bel(harvesterId(Id)) do (Id).send(collectingGarbage(Loc)). 
+		
+		%
+		if bel(not(ready(Self))), bel(tiedWith(_)) then adopt(agreementAchieved(Loc)) + drop(assignedGarbage(Loc)).
+	}
+	
+	%########################################################
+	forall goal(agreementAchieved(Loc)) do agreementProtocol. 
+	%########################################################
+	
+	% Notify system agent when I am ready. 	
+	if bel(ready(Id))
+		then (systemAgent).send(ready(Id)) + delete(ready(Id)).
+	
+	% If I have no goals I am ready. 	
+	if goal(not(sentDistance(_))), goal(not(allMessagesReceived(_))), goal(not(assignedGarbage(_))), 
+	goal(not(agreementAchieved(_))), bel(selfId(Self)) then insert(ready(self)). 
 }
+

@@ -4,6 +4,7 @@
 	newGarbage/1,
 	notifyNewGarbage/1,
 	agentId/1,
+	selfId/1,
 	ready/1,
 	checkedSurroundings/1.
 edge(10,11).

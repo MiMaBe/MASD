@@ -13,6 +13,8 @@ define scoutAgent2 as agent {
 }
 
 define harvesterAgent as agent{
+	use harvesterInit as init module.
+	use harvesterEvents as event module.
 	use harvester as main module.
 }
 
@@ -25,6 +27,6 @@ define systemAgent as agent{
 launchpolicy{
 	launch scoutAgent1.
 	launch scoutAgent2.
-	%launch HarvesterAgent.
+	launch harvesterAgent with number = 2.
 	launch systemAgent. 
 }
