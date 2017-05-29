@@ -1,4 +1,4 @@
-use harvesterKB as knowledge.
+use kb.harvesterKB as knowledge.
 
 order = linearall.
 

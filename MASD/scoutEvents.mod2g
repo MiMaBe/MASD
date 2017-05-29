@@ -1,4 +1,4 @@
-use scoutsKB as knowledge.
+use kb.scoutsKB as knowledge.
 
 module scoutEvents {
 	if (systemAgent).sent(selfId(Id))

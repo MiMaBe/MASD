@@ -1,5 +1,5 @@
-use scoutsKB as knowledge.
-use movingAgent as actionspec.
+use kb.scoutsKB as knowledge.
+use act.movingAgent as actionspec.
 
 module scout {	
 	% If agent does not know its identifier ask to any other agent.

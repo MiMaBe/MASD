@@ -1,4 +1,4 @@
-use harvesterKB as knowledge.
+use kb.harvesterKB as knowledge.
 
 module harvesterEvents {
 	% Store self identifier received from the system agent and communicate to other harvesters. 

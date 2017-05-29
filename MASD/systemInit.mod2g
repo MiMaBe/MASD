@@ -1,4 +1,4 @@
-use systemKB as knowledge.
+use kb.systemKB as knowledge.
 
 module systemInit {
 	if bel(generateNewGarbageLoc(Loc)) then insert(newGarbage(Loc)).

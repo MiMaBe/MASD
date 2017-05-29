@@ -1,4 +1,4 @@
-use harvesterKB as knowledge.
+use kb.harvesterKB as knowledge.
 
 order = linearall.
 
@@ -81,4 +81,4 @@ module harvester {
 	if goal(not(sentDistance(_))), goal(not(allMessagesReceived(_))), goal(not(assignedGarbage(_))), 
 	goal(not(agreementAchieved(_))), bel(selfId(Self)) then insert(ready(self)). 
 }
-
+}
